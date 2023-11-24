@@ -49,6 +49,23 @@ class Walker : public rclcpp::Node {
         break;
     }
   }
+  // @brief: Publishes on cmd_vel topic to move the robot forward in x direction
+  void forward(){
+    auto msg = geometry_msgs::msg::Twist();
+    msg.linear.x = 0.2;
+    commandVelPublisher_->publish(msg);
+  }
+  // @brief: Publishes on cmd_vel topic to turn the robot in z direction
+  void turn(){
+    auto msg = geometry_msgs::msg::Twist();
+    msg.angular.z = 0.2;
+    commandVelPublisher_->publish(msg);
+  }
+  // @brief: Publishes on cmd_vel topic to stop the robot
+  void stop(){
+    auto msg = geometry_msgs::msg::Twist();
+    commandVelPublisher_->publish(msg);
+  }
   bool obstacleDetected() {
     auto obstacleDetected = false;
     return obstacleDetected;
