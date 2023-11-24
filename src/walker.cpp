@@ -30,39 +30,41 @@ class Walker : public rclcpp::Node {
         break;
       case eMotionState::FORWARD:
         if (obstacleDetected()) {
-          // todo publish stop motion
+          stop();
           // set state to turn
           motionState_ = eMotionState::TURN;
         } else {
-          // todo publish forward motion
+          // move forward
+          forward();
         }
         break;
       case eMotionState::TURN:
         if (!obstacleDetected()) {
-          // todo publish stop motion
+          stop();
           motionState_ = eMotionState::FORWARD;
         } else {
-          // todo publish turn motion
+          turn();
         }
         break;
       case eMotionState::DO_NOTHING:
+        stop();
         break;
     }
   }
   // @brief: Publishes on cmd_vel topic to move the robot forward in x direction
-  void forward(){
+  inline void forward(){
     auto msg = geometry_msgs::msg::Twist();
     msg.linear.x = 0.2;
     commandVelPublisher_->publish(msg);
   }
   // @brief: Publishes on cmd_vel topic to turn the robot in z direction
-  void turn(){
+  inline void turn(){
     auto msg = geometry_msgs::msg::Twist();
     msg.angular.z = 0.2;
     commandVelPublisher_->publish(msg);
   }
   // @brief: Publishes on cmd_vel topic to stop the robot
-  void stop(){
+  inline void stop(){
     auto msg = geometry_msgs::msg::Twist();
     commandVelPublisher_->publish(msg);
   }
