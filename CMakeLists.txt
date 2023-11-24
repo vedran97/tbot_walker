@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.8)
 project(tbot_walker)
 
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
+endif()
+
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
@@ -15,7 +19,6 @@ add_executable(walker src/walker.cpp)
 target_include_directories(walker PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-target_compile_features(walker PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 
 install(TARGETS walker
   DESTINATION lib/${PROJECT_NAME})
