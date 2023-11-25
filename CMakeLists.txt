@@ -19,7 +19,7 @@ find_package(sensor_msgs REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
-add_executable(walker src/walker.cpp)
+add_executable(walker src/walker.cpp src/main.cpp)
 target_include_directories(walker PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
