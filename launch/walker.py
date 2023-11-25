@@ -17,7 +17,7 @@ def generate_launch_description():
         ),
             ExecuteProcess(
             condition=IfCondition(LaunchConfiguration('rosbag_record')),
-            cmd=['ros2', 'bag', 'record', '-a'],
+            cmd=['ros2', 'bag', 'record', '-o','walker_bag','-a','-x','depth_cam'],
             shell=True
         )
     ])
