@@ -283,17 +283,10 @@
             <ros>
               <namespace>depth_cam</namespace>
               <remapping>tbot_waffle_cam/depth/image_raw:=tbot_waffle_cam/depth</remapping>
-              <remapping>tbot_waffle_cam/camera_info:=tbot_waffle_cam/raw_cam_info</remapping>
-              <remapping>tbot_waffle_cam/depth/camera_info:=tbot_waffle_cam/depth_cam_info</remapping>
             </ros>
-
-            <!-- omit camera_name to default to sensor name -->
             <camera_name>tbot_waffle_cam</camera_name>
-
-            <!-- frame_name>omit so it defaults to link name</frame_name-->
-
             <min_depth>0.1</min_depth>
-            <max_depth>100</max_depth>
+            <max_depth>500</max_depth>
           </plugin>
       </sensor>
       <self_collide>0</self_collide>
