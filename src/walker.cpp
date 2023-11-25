@@ -18,16 +18,20 @@ class Walker : public rclcpp::Node {
   Walker() : Node("walker") {
     commandVelPublisher_ =
         this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
-    timer_ = this->create_wall_timer(std::chrono::milliseconds(10),
+    // timer callback function is called every 100ms
+    timer_ = this->create_wall_timer(std::chrono::milliseconds(100),
                                      std::bind(&Walker::timerCallback, this));
+    // set state to DO_NOTHING
     motionState_ = eMotionState::DO_NOTHING;
   }
 
  private:
+  // @brief: Timer callback function, checks for obstacle and updates motion
   void timerCallback() {
     RCLCPP_INFO_STREAM(this->get_logger(),"Timer callback called");
     updateMotionState();
   }
+  // @brief: Updates motion state of the robot
   void updateMotionState() {
     switch (motionState_) {
       case eMotionState::START:
@@ -73,6 +77,8 @@ class Walker : public rclcpp::Node {
     auto msg = geometry_msgs::msg::Twist();
     commandVelPublisher_->publish(msg);
   }
+  // @brief: Checks if obstacle is detected or not
+  // @return: true if obstacle is detected, false otherwise
   bool obstacleDetected() {
     auto obstacleDetected = false;
     return obstacleDetected;
