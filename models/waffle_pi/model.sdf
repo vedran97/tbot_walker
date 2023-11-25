@@ -269,10 +269,10 @@
         <visualize>1</visualize>
         <update_rate>15</update_rate>
         <camera>
-          <horizontal_fov>1.0856</horizontal_fov>
+          <horizontal_fov>1.047</horizontal_fov>
           <image>
-            <width>640</width>
-            <height>480</height>
+            <width>320</width>
+            <height>240</height>
           </image>
           <clip>
             <near>0.03</near>
