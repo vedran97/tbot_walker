@@ -14,6 +14,8 @@
 #include <rclcpp/logging.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/image.hpp>
+// @brief walker namespace to hold types and classes for the walker_node
+namespace walker {
 enum class eMotionState { START, FORWARD, TURN, DO_NOTHING };
 using image = sensor_msgs::msg::Image;
 class Walker : public rclcpp::Node {
@@ -132,9 +134,10 @@ class Walker : public rclcpp::Node {
   image lastReceivedImg_;
   rclcpp::Subscription<image>::SharedPtr depthImgSubscriber_;
 };
+};  // namespace walker
 int main(int argc, char** argv) {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<Walker>());
+  rclcpp::spin(std::make_shared<walker::Walker>());
   rclcpp::shutdown();
   return 0;
 }
