@@ -19,11 +19,19 @@ find_package(sensor_msgs REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
-add_executable(walker src/walker.cpp src/main.cpp)
+## walker_lib can now be linked to any test_exec or runtime_exec possible
+add_library(walker_lib src/walker.cpp)
+target_include_directories(walker_lib PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+ament_target_dependencies(walker_lib  rclcpp std_msgs geometry_msgs sensor_msgs)
+
+add_executable(walker src/main.cpp)
 target_include_directories(walker PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-ament_target_dependencies(walker  rclcpp std_msgs geometry_msgs sensor_msgs)
+target_link_libraries(walker walker_lib)
+ament_target_dependencies(walker rclcpp std_msgs geometry_msgs sensor_msgs)
 
 install(TARGETS walker
   DESTINATION lib/${PROJECT_NAME})
