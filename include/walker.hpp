@@ -48,5 +48,5 @@ class Walker : public rclcpp::Node {
   image lastReceivedImg_;
   rclcpp::Subscription<image>::SharedPtr depthImgSubscriber_;
 };
-};
+};  // namespace walker
 #endif
