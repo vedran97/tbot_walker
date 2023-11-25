@@ -23,15 +23,14 @@ This package was built and tested for ros2-humble on an ubuntu 22.04 distro.<br>
 ## Instructions to run the cpptools
 
 ```bash
-# run clang-format
+# run clang-format from workspace root
 
   cd src/tbot_walker && clang-format -i --style=Google $(find . -name *.cpp -o -name *.hpp | grep -vE -e "^(./build/|./install/|./log/)") && cd -
 
-# run cppcheck
-
+# run cppcheck from inside the pkg directory
   mkdir results -p && cppcheck --enable=all --std=c++17 -I include/ --suppress=missingInclude --inline-suppr $( find . -name *.cpp | grep -vE -e "^(./build/|./install/|./log/)" ) &> results/cppcheck
 
-# run cpplint
+# run cpplint from inside the pkg directory
 
   mkdir results -p && cpplint  --filter=-build/c++11,+build/c++17,-build/namespaces,-build/include_order $( find . -name *.cpp | grep -vE -e "^(./build/|./install/|./log/)" ) &> results/cpplint
 
