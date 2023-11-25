@@ -26,6 +26,7 @@ target_include_directories(walker_lib PUBLIC
   $<INSTALL_INTERFACE:include>)
 ament_target_dependencies(walker_lib  rclcpp std_msgs geometry_msgs sensor_msgs)
 
+## actual walker node which links against walker_lib
 add_executable(walker src/main.cpp)
 target_include_directories(walker PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
