@@ -7,7 +7,7 @@ from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
     return LaunchDescription([
-        DeclareLaunchArgument('rosbag_record', default_value = 'true', choices = ['true', 'false'], description = "Enable recording all topics except camera?"),
+        DeclareLaunchArgument('rosbag_record', default_value = 'false', choices = ['true', 'false'], description = "Enable recording all topics except camera?"),
         # Launch the publisher node
         Node(
             package='tbot_walker',
