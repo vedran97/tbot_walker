@@ -106,6 +106,23 @@ class Walker : public rclcpp::Node {
                                                << maxHeight
                                                << " maxWidth: " << maxWidth
                                                << " step: " << step);
+    // topPixel is the pixel number from top of the image that should be checked
+    // for existence of an image
+    constexpr const size_t topPixel = 50;
+    // closest tolerated depth
+    constexpr const float closestToleratedDepthMeters = 0.5;
+    assert(maxHeight > topPixel);
+    for (size_t height = 0; height < topPixel; height++) {
+      for (size_t width = 0; width < maxWidth; width++) {
+        const auto idx = height * maxWidth + width;
+        assert((idx) <= step * sizeof(float));
+        const auto& pixel = data[idx];
+        if (pixel < closestToleratedDepthMeters) {
+          obstacleDetected = true;
+          break;
+        }
+      }
+    }
     return obstacleDetected;
   }
   std::mutex dataMutex_;
