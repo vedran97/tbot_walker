@@ -14,6 +14,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -22,7 +23,7 @@ add_executable(walker src/walker.cpp)
 target_include_directories(walker PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-ament_target_dependencies(walker  rclcpp std_msgs geometry_msgs)
+ament_target_dependencies(walker  rclcpp std_msgs geometry_msgs sensor_msgs)
 
 install(TARGETS walker
   DESTINATION lib/${PROJECT_NAME})
