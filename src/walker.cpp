@@ -115,7 +115,7 @@ class Walker : public rclcpp::Node {
     for (size_t height = 0; height < topPixel; height++) {
       for (size_t width = 0; width < maxWidth; width++) {
         const auto idx = height * maxWidth + width;
-        assert((idx) <= step * sizeof(float));
+        assert((width) <= step / sizeof(float));
         const auto& pixel = data[idx];
         if (pixel < closestToleratedDepthMeters) {
           obstacleDetected = true;
