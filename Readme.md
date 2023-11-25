@@ -50,3 +50,7 @@ This package was built and tested for ros2-humble on an ubuntu 22.04 distro.<br>
 3. Recorded bag for a run of the walker is stored inside results/walker_bag folder
 4. Inspecting the ros bag ```ros2 bag info src/tbot_walker/results/walker_bag/walker_bag_0.db3``` from root of the workspace
 5. Playing back the ros bag ```ros2 bag play src/tbot_walker/results/walker_bag/walker_bag_0.db3```.
+
+## Testability
+
+1. This package already depends on gtest, and exports the walker node as a linkable "walker_lib" with a dedicated header file. This makes it test ready.

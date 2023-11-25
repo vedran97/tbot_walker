@@ -1,3 +1,14 @@
+/**
+ * @file walker.hpp
+ * @author Vedant Ranade
+ * @brief ROS2 tbot3 walker node's class declaration
+ * @version 0.1
+ * @date 2023-11-03
+ *
+ * @copyright Copyright (c) 2023
+ *
+ */
+
 #ifndef WALKER_808x_HPP
 #define WALKER_808x_HPP
 #include <geometry_msgs/msg/twist.hpp>
