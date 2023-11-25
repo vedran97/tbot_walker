@@ -8,14 +8,14 @@
  * @copyright Copyright (c) 2023
  *
  */
-#include <mutex>
 #include <geometry_msgs/msg/twist.hpp>
+#include <mutex>
 #include <rclcpp/logger.hpp>
 #include <rclcpp/logging.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/image.hpp>
 enum class eMotionState { START, FORWARD, TURN, DO_NOTHING };
-using image= sensor_msgs::msg::Image;
+using image = sensor_msgs::msg::Image;
 class Walker : public rclcpp::Node {
  public:
   Walker() : Node("walker") {
@@ -28,15 +28,18 @@ class Walker : public rclcpp::Node {
     motionState_ = eMotionState::DO_NOTHING;
     // subscribe to depth image topic
     depthImgSubscriber_ = this->create_subscription<image>(
-        "/depth_cam/tbot_waffle_cam/depth", 10,
-        [this](const image& msg) {  std::unique_lock<std::mutex> lock(dataMutex_);lastReceivedImg_ = msg; });
+        "depth_cam/tbot_waffle_cam/depth", 10, [this](const image& msg) {
+          std::unique_lock<std::mutex> lock(dataMutex_);
+          lastReceivedImg_ = msg;
+        });
   }
 
  private:
   // @brief: Timer callback function, checks for obstacle and updates motion
   void timerCallback() {
-    RCLCPP_INFO_STREAM(this->get_logger(),"Motion state updater callback");
-    if(lastReceivedImg_.header.stamp.nanosec > 0 && motionState_ == eMotionState::DO_NOTHING){
+    RCLCPP_INFO_STREAM(this->get_logger(), "Motion state updater callback");
+    if (lastReceivedImg_.header.stamp.nanosec > 0 &&
+        motionState_ == eMotionState::DO_NOTHING) {
       motionState_ = eMotionState::START;
     }
     updateMotionState();
@@ -72,21 +75,21 @@ class Walker : public rclcpp::Node {
   }
   // @brief: Publishes on cmd_vel topic to move the robot forward in x direction
   inline void forward() {
-    RCLCPP_INFO_STREAM(this->get_logger(),"Moving forward");
+    RCLCPP_INFO_STREAM(this->get_logger(), "Moving forward");
     auto msg = geometry_msgs::msg::Twist();
     msg.linear.x = 0.2;
     commandVelPublisher_->publish(msg);
   }
   // @brief: Publishes on cmd_vel topic to turn the robot in z direction
   inline void turn() {
-    RCLCPP_INFO_STREAM(this->get_logger(),"Turning");
+    RCLCPP_INFO_STREAM(this->get_logger(), "Turning");
     auto msg = geometry_msgs::msg::Twist();
     msg.angular.z = 0.2;
     commandVelPublisher_->publish(msg);
   }
   // @brief: Publishes on cmd_vel topic to stop the robot
   inline void stop() {
-    RCLCPP_INFO_STREAM(this->get_logger(),"Stopping");
+    RCLCPP_INFO_STREAM(this->get_logger(), "Stopping");
     auto msg = geometry_msgs::msg::Twist();
     commandVelPublisher_->publish(msg);
   }
@@ -95,7 +98,14 @@ class Walker : public rclcpp::Node {
   bool obstacleDetected() {
     auto obstacleDetected = false;
     std::unique_lock<std::mutex> lock(dataMutex_);
-
+    const auto& maxHeight = lastReceivedImg_.height;
+    const auto& maxWidth = lastReceivedImg_.width;
+    const auto& step = lastReceivedImg_.step;
+    const auto data = reinterpret_cast<float*>(lastReceivedImg_.data.data());
+    RCLCPP_INFO_STREAM(this->get_logger(), "Depth Image received: maxHeight: "
+                                               << maxHeight
+                                               << " maxWidth: " << maxWidth
+                                               << " step: " << step);
     return obstacleDetected;
   }
   std::mutex dataMutex_;
