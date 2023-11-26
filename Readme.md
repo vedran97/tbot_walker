@@ -1,24 +1,24 @@
 # tbot_walker
 
-this package demoes use of tbot as a roomba-like device<br>
+This package demoes use of tbot as a roomba-like device<br>
 This package was built and tested for ros2-humble on an ubuntu 22.04 distro.<br>
+The model of turtlebot3 is waffle_pi
 
 ## Install process
 
-1. Clone this repo in a ros2 workspace(src) folder : ```git clone https://github.com/vedran97/tbot_walker.git```
+1. Clone this repo in a ros2 workspace's src folder : ```git clone https://github.com/vedran97/tbot_walker.git```
 2. Install dependencies by running ```rosdep install -i --from-path src --rosdistro humble -y``` in the root of your workspace.
-3. Build the package with the following command:
-
-## Build commands
-
-1. Build the workspace:```colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --parallel-workers $(nproc)```
-2. Source the workspace: ```source install/setup.bash```
 
 ## Ensure you have necessary packages installed
 
 1. ```sudo apt -y install ros-humble-desktop-full```
 2. ```sudo apt -y install ros-humble-gazebo-ros-pkgs```
 3. ```sudo apt -y install ros-humble-turtlebot3*```
+
+## Building process
+
+1. Build the workspace:```colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --parallel-workers $(nproc)```
+2. Source the workspace: ```source install/setup.bash```
 
 ## Instructions to run the cpptools
 
@@ -39,9 +39,9 @@ This package was built and tested for ros2-humble on an ubuntu 22.04 distro.<br>
 ## Run code
 
 0. Build the package,then source the package in 2 terminals ```source install/setup.bash```
-1. ```export TURTLEBOT3_MODEL=waffle_pi && ros2 launch tbot_walker spawn_tbot.py``` to spawn the robot
-2. ```ros2 launch tbot_walker walker.py``` to just run the walker node without rosbag record
-3. ```ros2 launch tbot_walker walker.py rosbag_record:=true``` to launch walker node and record all topics except camera and scan.
+1. run this in 1 terminal ```export TURTLEBOT3_MODEL=waffle_pi && ros2 launch tbot_walker spawn_tbot.py``` to spawn the robot
+2. run this or cmd in #3 in another terminal ```ros2 launch tbot_walker walker.py``` to just run the walker node without rosbag record // note : Run this only after the robot spawns in gazebo and simulation starts running
+3. ```ros2 launch tbot_walker walker.py rosbag_record:=true``` to launch walker node and record all topics except camera and scan. // note : Run this only after the robot spawns in gazebo and simulation starts running
 
 ## Results and replaying the ros bag
 
