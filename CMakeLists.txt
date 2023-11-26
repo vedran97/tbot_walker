@@ -20,7 +20,7 @@ find_package(sensor_msgs REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 ## walker_lib can now be linked to any test_exec or runtime_exec possible
-add_library(walker_lib src/walker.cpp)
+add_library(walker_lib libs/walker.cpp)
 target_include_directories(walker_lib PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
